@@ -12,7 +12,7 @@ document.documentElement.style.setProperty('--button-text', theme.button_text_co
 document.documentElement.style.setProperty('--secondary-bg', theme.secondary_bg_color || '#f4f4f5');
 
 // 👉 Replace with your real blockId from partner.adsgram.ai
-const ADSGRAM_BLOCK_ID = 'your-block-id';
+const ADSGRAM_BLOCK_ID = '44702';
 const AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
 
 const listEl = document.getElementById('video-list');
@@ -103,3 +103,4 @@ function resetButton(btn) {
 }
 
 loadVideos();
+
