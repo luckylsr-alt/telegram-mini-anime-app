@@ -11,9 +11,8 @@ document.documentElement.style.setProperty('--button', theme.button_color || '#2
 document.documentElement.style.setProperty('--button-text', theme.button_text_color || '#ffffff');
 document.documentElement.style.setProperty('--secondary-bg', theme.secondary_bg_color || '#f4f4f5');
 
-// 👉 Replace with your real blockId from partner.adsgram.ai
-const ADSGRAM_BLOCK_ID = '44702';
-const AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
+// 👉 Replace with the zone ID Monetag gave you (same one used in index.html's script tag)
+const MONETAG_ZONE_ID = '11768368';
 
 const listEl = document.getElementById('video-list');
 const toastEl = document.getElementById('toast');
@@ -67,7 +66,15 @@ function handleUnlock(btn) {
   btn.disabled = true;
   btn.textContent = 'Loading ad…';
 
-  AdController.show()
+  const showAd = window['show_' + MONETAG_ZONE_ID];
+
+  if (typeof showAd !== 'function') {
+    showToast('Ad system not loaded. Refresh and try again.', true);
+    resetButton(btn);
+    return;
+  }
+
+  showAd()
     .then(() => unlockVideo(videoId, btn))
     .catch(() => {
       showToast('Ad not available right now. Try again later.', true);
@@ -100,6 +107,9 @@ async function unlockVideo(videoId, btn) {
 function resetButton(btn) {
   btn.disabled = false;
   btn.textContent = '▶ Watch Ad & Unlock';
+}
+
+loadVideos();
 }
 
 loadVideos();
